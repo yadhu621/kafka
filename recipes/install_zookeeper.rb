@@ -29,8 +29,8 @@ end
 # download source
 remote_file download_destination do
   source source_location
-  owner 'zookeeeper'
-  group 'zookeeeper'
+  owner 'zookeeper'
+  group 'zookeeper'
   mode '0644'
   action :create
 end
