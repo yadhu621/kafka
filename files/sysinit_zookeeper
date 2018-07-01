@@ -8,11 +8,15 @@ source /etc/rc.d/init.d/functions
 
 ZOOKEEPER_BIN='/opt/zookeeper/bin/zkServer.sh'
 ZOOKEEPER_CONF='/opt/zookeeper/conf/zoo.cfg'
+ZOOKEEPER_LOGS='/zookeeper/logs'
+ZOOKEEPER_ENV='/opt/zookeeper/bin/zkEnv.sh'
 desc="zookeeper daemon"
+
+source $ZOOKEEPER_ENV
 
 start(){
   echo "Starting $desc :"
-  $ZOOKEEPER_BIN start
+  ZOO_LOG_DIR=$ZOOKEEPER_LOGS $ZOOKEEPER_BIN start
 }
 
 stop(){
