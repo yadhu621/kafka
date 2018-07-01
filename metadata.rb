@@ -1,0 +1,7 @@
+name 'kafka'
+maintainer 'Yadhunandan Thoppay Prabakaran'
+maintainer_email 'yadhu621@gmail.com'
+license 'All Rights Reserved'
+description 'Installs/Configures kafka'
+long_description 'Installs/Configures kafka'
+version '0.1.0'
