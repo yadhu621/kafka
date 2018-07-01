@@ -29,13 +29,12 @@ stop(){
 }
 
 status(){
-  echo "Statusing $desc :"
-  
+  $ZOOKEEPER_BIN status
 }
 
 restart(){
-  echo "Restarting $desc :"
-  
+  stop
+  start
 }
 
 case "$1" in

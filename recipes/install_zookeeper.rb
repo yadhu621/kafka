@@ -82,5 +82,7 @@ cookbook_file '/etc/rc.d/init.d/zookeeper' do
   action :create
 end
 
-
 # start service
+service 'zookeeper' do
+  action [:start, :enable]
+end
