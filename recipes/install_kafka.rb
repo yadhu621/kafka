@@ -24,7 +24,7 @@ my_hash = {
 }
 
 # cleanup previous installation
-include_recipe 'ipm_kafka::remove_kafka'
+include_recipe 'kafka::remove_kafka'
 
 # create a user for kafka
 user 'kafka' do
