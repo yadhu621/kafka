@@ -18,6 +18,9 @@ my_hash = {
   zookeeper_purgeInterval: zookeeper_purgeInterval,
 }
 
+# cleanup previous installation
+include_recipe 'kafka::remove_zookeeper'
+
 # create zookeeper system user
 user 'zookeeper' do
   comment 'system account for zookeeper'
