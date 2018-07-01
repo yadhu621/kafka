@@ -1,10 +1,13 @@
-#attributes
+# attributes
 source_location = node['kafka']['zookeeper']['source_location']
 download_destination = node['kafka']['zookeeper']['download_destination']
-parent_dir = node['kafka']['zookeeper']['parent_dir'] # /zookeeper
-data_dir = node['kafka']['zookeeper']['dataDir'] # /zookeeper/dataDir
-data_log_dir = node['kafka']['zookeeper']['dataLogDir'] # /zookeeper/dataLogDir
-logs_dir = node['kafka']['zookeeper']['logs_dir'] # /zookeeper/logs
+zookeeper_parent_dir = node['kafka']['zookeeper']['parent_dir'] # /zookeeper
+zookeeper_dataDir = node['kafka']['zookeeper']['dataDir'] # /zookeeper/dataDir
+zookeeper_dataLogDir = node['kafka']['zookeeper']['dataLogDir'] # /zookeeper/dataLogDir
+zookeeper_logs_dir = node['kafka']['zookeeper']['logs_dir'] # /zookeeper/logs
+zookeeper_clientPort = node['rwest_caogasce_kafka']['zookeeper']['clientPort'] ## 2181
+zookeeper_snapRetainCount = node['rwest_caogasce_kafka']['zookeeper']['snapRetainCount'] ## 3
+zookeeper_purgeInterval= node['rwest_caogasce_kafka']['zookeeper']['purgeInterval'] ## 168
 
 # variable hash for zoo.cfg template
 my_hash = {
@@ -46,7 +49,7 @@ execute 'move to /opt and rename' do
 end
 
 # create required directories and files
-[parent_dir, data_dir, data_log_dir, logs_dir].each do |dir|
+[zookeeper_parent_dir, zookeeper_dataDir, zookeeper_dataLogDir, zookeeper_logs_dir].each do |dir|
   directory dir do
     owner 'zookeeper'
     group 'zookeeper'
