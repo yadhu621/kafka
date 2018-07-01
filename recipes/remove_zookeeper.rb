@@ -4,7 +4,7 @@ existing_source_with_version = 'zookeeper-3.4.12'
 
 # stop zookeeper service
 service 'zookeeper' do
-  action :start
+  action :stop
 end
 
 # remove directory from /tmp
