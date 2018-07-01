@@ -74,5 +74,13 @@ template '/opt/zookeeper/conf/zoo.cfg' do
 end
 
 # deliver sysinit script
+file '/etc/rc.d/init.d/zookeeper' do
+  content 'sysinit_zookeeper'
+  owner 'zookeeper'
+  group 'zookeeper'
+  mode '0644'
+  action :create
+end
+
 
 # start service

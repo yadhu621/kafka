@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# chkconfig: 89 9
+
+# description: zookeeper
+
+source /etc/rc.d/init.d/functions
+
+ZOOKEEPER_BIN='/opt/zookeeper/bin/zkServer.sh'
+ZOOKEEPER_CONF='/opt/zookeeper/conf/zoo.cfg'
+desc="zookeeper daemon"
+
+start(){
+  echo "Starting $desc :"
+  $ZOOKEEPER_BIN start
+}
+
+stop(){
+  echo "Stopping $desc :"
+  $ZOOKEEPER_BIN stop
+}
+
+status(){
+  echo "Statusing $desc :"
+  
+}
+
+restart(){
+  echo "Restarting $desc :"
+  
+}
+
+case "$1" in
+  start)
+    start 
+    ;;
+  stop)
+    stop 
+    ;;
+  status)
+    status 
+    ;;
+  restart)
+    restart
+    ;;
+  *)
+    echo "Usage: service $desc {start|stop|restart|status}"
+    ;;
+esac
