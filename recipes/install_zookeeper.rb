@@ -5,9 +5,9 @@ zookeeper_parent_dir = node['kafka']['zookeeper']['parent_dir'] # /zookeeper
 zookeeper_dataDir = node['kafka']['zookeeper']['dataDir'] # /zookeeper/dataDir
 zookeeper_dataLogDir = node['kafka']['zookeeper']['dataLogDir'] # /zookeeper/dataLogDir
 zookeeper_logs_dir = node['kafka']['zookeeper']['logs_dir'] # /zookeeper/logs
-zookeeper_clientPort = node['rwest_caogasce_kafka']['zookeeper']['clientPort'] ## 2181
-zookeeper_snapRetainCount = node['rwest_caogasce_kafka']['zookeeper']['snapRetainCount'] ## 3
-zookeeper_purgeInterval= node['rwest_caogasce_kafka']['zookeeper']['purgeInterval'] ## 168
+zookeeper_clientPort = node['kafka']['zookeeper']['clientPort'] ## 2181
+zookeeper_snapRetainCount = node['kafka']['zookeeper']['snapRetainCount'] ## 3
+zookeeper_purgeInterval= node['kafka']['zookeeper']['purgeInterval'] ## 168
 
 # variable hash for zoo.cfg template
 my_hash = {
