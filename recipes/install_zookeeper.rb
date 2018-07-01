@@ -39,6 +39,9 @@ end
 execute 'unzip and untar zookeeper source' do
   cwd '/tmp'
   command "tar xvzf #{download_destination}"
+  user 'zookeeper'
+  group 'zookeeper'
+  umask 022
   action :run
 end
 
