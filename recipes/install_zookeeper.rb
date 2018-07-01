@@ -59,7 +59,7 @@ end
   directory dir do
     owner 'zookeeper'
     group 'zookeeper'
-    mode '0644'
+    mode '0755'
     action :create
   end
 end
