@@ -78,7 +78,7 @@ file '/etc/rc.d/init.d/zookeeper' do
   content 'sysinit_zookeeper'
   owner 'zookeeper'
   group 'zookeeper'
-  mode '0644'
+  mode '0755'
   action :create
 end
 
