@@ -34,3 +34,10 @@ end
 file '/etc/rc.d/init.d/kafka' do
   action :delete
 end
+
+# remove kafka user
+user 'kafka' do
+  action :delete
+end
+
+

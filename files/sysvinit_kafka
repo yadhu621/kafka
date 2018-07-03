@@ -42,9 +42,12 @@ start() {
   
         # Run daemon
         cd $KAFKA_HOME
-        nohup sh $KAFKA_SCRIPT $KAFKA_CONFIG 2>&1 >> $KAFKA_CONSOLE_LOG 2>&1 &
-        PID=$!
-        echo $PID > $KAFKA_PIDFILE
+        daemon \
+                --user=$KAFKA_USER \
+                --pidfile=$KAFKA_PIDFILE \
+                " { nohup sh $KAFKA_SCRIPT $KAFKA_CONFIG 2>&1 >> $KAFKA_CONSOLE_LOG 2>&1 & } ; echo \$! >| $KAFKA_PIDFILE "
+        #PID=$!
+        #echo $PID > $KAFKA_PIDFILE
         
         count=0
         launched=false

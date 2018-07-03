@@ -6,6 +6,7 @@ zookeeper_dataLogDir = node['kafka']['zookeeper']['dataLogDir'] # /zookeeper/dat
 zookeeper_logs_dir = node['kafka']['zookeeper']['logs_dir'] # /zookeeper/logs
 zookeeper_opt_dir = '/opt/zookeeper'
 zookeeper_tmp_dir = '/tmp/zookeeper-3.4.12'
+zookeeper_config_file = '/opt/zookeeper/conf/zoo.cfg'
 
 # stop zookeeper service
 service 'zookeeper' do
@@ -26,12 +27,18 @@ end
   end
 end
 
-# remove zookeeper tarball
-file download_destination do
-  action :delete
+# remove zookeeper tarball and zoo.cfg
+[download_destination, zookeeper_config_file].each do |f|
+  file f do
+    action :delete
+  end
 end
 
 # remove sysvinit script
 file '/etc/rc.d/init.d/zookeeper' do
   action :delete
+end
+
+user 'zookeeper' do
+  action :remove
 end

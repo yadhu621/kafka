@@ -12,6 +12,8 @@ ZOOKEEPER_LOGS='/zookeeper/logs'
 ZOOKEEPER_ENV='/opt/zookeeper/bin/zkEnv.sh'
 ZOOKEEPER_USER='zookeeper'
 desc="zookeeper daemon"
+PIDFILE='/zookeeper/dataDir/zookeeper_server.pid'
+LOCKFILE='/var/lock/subsys/zookeeper'
 
 source $ZOOKEEPER_ENV
 

@@ -1,6 +1,6 @@
 # attributes
 source_location = node['kafka']['zookeeper']['source_location']
-download_destination = node['kafka']['zookeeper']['download_destination']
+download_destination = node['kafka']['zookeeper']['download_destination'] # '/tmp/zookeeper-3.4.12.tar.gz'
 zookeeper_parent_dir = node['kafka']['zookeeper']['parent_dir'] # /zookeeper
 zookeeper_dataDir = node['kafka']['zookeeper']['dataDir'] # /zookeeper/dataDir
 zookeeper_dataLogDir = node['kafka']['zookeeper']['dataLogDir'] # /zookeeper/dataLogDir
@@ -20,6 +20,9 @@ my_hash = {
 
 # cleanup previous installation
 include_recipe 'kafka::remove_zookeeper'
+
+# install java
+include_recipe 'kafka::install_java'
 
 # create zookeeper system user
 user 'zookeeper' do

@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# chkconfig: 2345 90 10
+
+# description: kafka-manager
+
+
+source /etc/rc.d/init.d/functions
+
+KAFKAMANAGER='/opt/kafka-manager/bin/kafka-manager'
+ZOO_HOSTS='localhost:2181'
+KAFKAMANAGER_LOG='/kafka/kafka-manager/logs/kafka-manager.log'
+PIDFILE='/kafka/kafka-manager/kafka-manager.pid'
+LOCKFILE='/var/lock/subsys/kafka-manager'
+RETVAL=0
+USER='kafka'
+desc='kafka-manager'
+
+is_running(){
+        pid=$(get_pid)
+        if [ -n "$pid" ]; then
+                [ `ps --pid $pid | grep -c $pid` -ge 1 ] && echo "true"
+        else
+                echo "false"
+        fi
+}
+
+get_pid(){
+        [ -f $PIDFILE ] && read pid < "$PIDFILE"; echo "$pid"
+}
+
+start(){
+
+        if [ "$(is_running)" = "true" ]; then
+                echo "kafka-manager already running with $(get_pid)"
+        else
+                echo "Starting $desc :"
+                # start the process
+                daemon \
+                        --pidfile=$PIDFILE \
+                        --user=$USER \
+                        " { $KAFKAMANAGER -Dkafka-manager.zkhosts=$ZOO_HOSTS 2>&1 >> $KAFKAMANAGER_LOG & } ; echo \$! > $PIDFILE "
+
+                # get its PID
+                echo "kafka-manager started with pid $(get_pid)"
+
+                # touch a lockfile
+                RETVAL=$?
+                [ $RETVAL -eq 0 ] && touch $LOCKFILE
+        fi
+}
+
+stop(){
+        if [ "$(is_running)" = "true" ]; then
+                echo "Stopping $desc :"
+                kill "$(get_pid)"
+                RETVAL=$?
+                [ $RETVAL -eq 0 ] && rm -f $LOCKFILE $PIDFILE
+                success
+                echo "STOPPED"
+        else
+                echo "kafka-manager is not running. Nothing to do."
+        fi
+}
+
+status(){
+        if [ "$(is_running)" = "true" ]; then
+                echo "kafka-manager is running with $(get_pid)"
+        else
+                echo "kafka-manager is not running."
+        fi
+}
+
+restart(){
+        stop; start
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  status)
+    status
+    ;;
+  restart)
+    restart
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|status|restart}"
+    exit 1
+    ;;
+esac
