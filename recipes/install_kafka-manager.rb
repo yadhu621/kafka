@@ -80,9 +80,9 @@ end
 # create kafka-manager directories
 [kafka_manager_parent_dir, kafka_manager_log_dir].each do |dir|
   directory dir do
-    owner 'kafka-manager'
-    group 'kafka-manager'
-    mode '0644'
+    owner 'kafka'
+    group 'kafka'
+    mode '0755'
     action :create
   end
 end
