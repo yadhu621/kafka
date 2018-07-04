@@ -1,5 +1,5 @@
 # install java
-include_recipe 'kafka:install_java'
+include_recipe 'kafka::install_java'
 
 ###################################################################################
 ##################### STEPS TO BUILD KAFKA_MANAGER FROM SOURCE ####################
