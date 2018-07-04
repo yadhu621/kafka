@@ -1,6 +1,6 @@
 # kafka variables
-source_location = node['kafka']['kafka_source_location']
-download_destination = node['kafka']['kafka_download_destination']
+source_location = node['kafka']['kafka']['source_location']
+download_destination = node['kafka']['kafka']['download_destination']
 
 kafka_parent_dir = node['kafka']['kafka']['parent.dir'] ## /kafka
 kafka_logdirs = node['kafka']['kafka']['log.dirs'] ## /kafka/kafka-logs
