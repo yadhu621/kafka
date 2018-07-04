@@ -64,7 +64,7 @@ end
   directory dir do
     owner 'kafka'
     group 'kafka'
-    mode '0644'
+    mode '0755'
     action :create
     recursive true
   end
