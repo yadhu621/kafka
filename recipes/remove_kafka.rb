@@ -37,7 +37,7 @@ end
 
 # remove kafka user
 user 'kafka' do
-  action :delete
+  action :remove
 end
 
 
