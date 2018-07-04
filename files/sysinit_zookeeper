@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# chkconfig: 89 9
+# chkconfig: 2345 89 9
 
 # description: zookeeper
 

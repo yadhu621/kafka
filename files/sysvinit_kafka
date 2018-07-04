@@ -1,7 +1,7 @@
 #! /bin/sh
 # /etc/init.d/kafka: start the kafka daemon.
 
-# chkconfig: - 80 20
+# chkconfig: 2345 80 20
 # description: kafka
 
 KAFKA_HOME='/opt/kafka'
