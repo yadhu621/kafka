@@ -1,5 +1,4 @@
-#! /bin/sh
-# /etc/init.d/kafka: start the kafka daemon.
+#!/bin/sh
 
 # chkconfig: 2345 80 20
 # description: kafka

@@ -88,6 +88,7 @@ cookbook_file '/etc/rc.d/init.d/kafka' do
   action :create
 end
 
+# start kafka service
 service 'kafka' do
   action [:start, :enable]
 end
