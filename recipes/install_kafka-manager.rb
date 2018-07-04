@@ -90,7 +90,7 @@ end
 # unzip the binary to /opt and rename to kafka-manager
 execute 'unzip the kafka binary to /opt' do
   cwd '/opt'
-  command 'unzip /tmp/kafka-manager/target/universal/kafka* && mv kafka* /opt/kafka-manager'
+  command 'unzip /tmp/kafka-manager/target/universal/kafka-manager* && mv kafka-manager* /opt/kafka-manager'
   action :run
 end
 
