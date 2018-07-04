@@ -22,6 +22,7 @@ end
 ].each do |dir|
   directory dir do
     action :delete
+    recursive true
   end
 end
 
