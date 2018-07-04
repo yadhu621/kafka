@@ -31,8 +31,14 @@ default['kafka']['kafka-manager']['source_location'] = 'https://github.com/yahoo
 default['kafka']['kafka-manager']['download_location'] = '/tmp'
 default['kafka']['kafka-manager']['scala_source_location'] = 'https://downloads.lightbend.com/scala/2.12.2/scala-2.12.2.rpm'
 default['kafka']['kafka-manager']['scala_download_location'] = '/tmp'
+default['kafka']['kafka-manager']['sbt_source_location'] = 'https://sbt.bintray.com/rpm/sbt-1.1.6.rpm'
+default['kafka']['kafka-manager']['sbt_download_location'] = '/tmp'
+
+
 default['kafka']['kafka-manager']['parent_dir'] = '/kafka/kafka-manager'
 default['kafka']['kafka-manager']['logs_dir'] = '/kafka/kafka-manager/logs'
+
+
 
 
 

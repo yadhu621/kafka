@@ -15,10 +15,15 @@ include_recipe 'kafka::install_java'
 # attributes
 kafka_manager_source_location = node['kafka']['kafka-manager']['source_location'] # 'https://github.com/yahoo/kafka-manager.git'
 kafka_manager_download_location = node['kafka']['kafka-manager']['download_location'] # '/tmp'
-scala_source_location = node['kafka']['kafka-manager']['scala_source_location'] # https://downloads.lightbend.com/scala/2.12.2/scala-2.12.2.rpm
-scala_download_location = node['kafka']['kafka-manager']['scala_download_location'] # /tmp
 kafka_manager_parent_dir = node['kafka']['kafka-manager']['parent_dir'] # '/kafka/kafka-manager'
 kafka_manager_logs_dir = node['kafka']['kafka-manager']['logs_dir'] #'/kafka/kafka-manager/logs'
+
+scala_source_location = node['kafka']['kafka-manager']['scala_source_location'] # https://downloads.lightbend.com/scala/2.12.2/scala-2.12.2.rpm
+scala_download_location = node['kafka']['kafka-manager']['scala_download_location'] # /tmp
+
+sbt_source_location = node['kafka']['kafka-manager']['sbt_source_location'] # https://sbt.bintray.com/rpm/sbt-1.1.6.rpm
+sbt_download_location = node['kafka']['kafka-manager']['sbt_download_location'] # /tmp
+
 
 # download scala rpm
 execute 'download scala rpm' do
@@ -44,18 +49,28 @@ execute 'install scala' do
   action :run
 end
 
-# deliver sbt repo file
-cookbook_file '/etc/yum.repos.d/sbt.repo' do
-  source 'sbt.repo'
+# download sbt rpm
+execute 'download sbt rpm' do
+  cwd "#{sbt_download_location}"
+  command "wget #{sbt_source_location}"
+  action :run
+  not_if { ::File.exist?("/tmp/sbt-1.1.6.rpm") }
+end
+
+# deliver sbt install script
+cookbook_file '/tmp/install_sbt.sh' do
+  source 'install_sbt.sh'
   owner 'root'
   group 'root'
-  mode '0644'
+  mode '0755'
   action :create
 end
 
-# install sbt
-package 'sbt' do
-  action :install
+# install sbt ( if not installed already)
+execute 'install sbt' do
+  cwd '/tmp'
+  command 'bash install_sbt.sh'
+  action :run
 end
 
 # download kafka-manager source
