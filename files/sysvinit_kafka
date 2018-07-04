@@ -35,12 +35,14 @@ start() {
                 fi
         fi
 
-        rm -f $KAFKA_CONSOLE_LOG
+        #rm -f $KAFKA_CONSOLE_LOG
         mkdir -p $(dirname $KAFKA_PIDFILE)
         chown $KAFKA_USER $(dirname $KAFKA_PIDFILE) || true
   
         # Run daemon
         cd $KAFKA_HOME
+        [ -f $KAFKA_CONSOLE_LOG ] || $KAFKA_CONSOLE_LOG
+        chown $KAFKA_USER $KAFKA_CONSOLE_LOG || true
         daemon \
                 --user=$KAFKA_USER \
                 --pidfile=$KAFKA_PIDFILE \
