@@ -17,6 +17,8 @@ kafka_manager_source_location = node['kafka']['kafka-manager']['source_location'
 kafka_manager_download_location = node['kafka']['kafka-manager']['download_location'] # '/tmp'
 scala_source_location = node['kafka']['kafka-manager']['scala_source_location'] # https://downloads.lightbend.com/scala/2.12.2/scala-2.12.2.rpm
 scala_download_location = node['kafka']['kafka-manager']['scala_download_location'] # /tmp
+kafka_manager_parent_dir = node['kafka']['kafka-manager']['parent_dir'] # '/kafka/kafka-manager'
+kafka_manager_logs_dir = node['kafka']['kafka-manager']['logs_dir'] #'/kafka/kafka-manager/logs'
 
 # download scala rpm
 execute 'download scala rpm' do
@@ -78,7 +80,7 @@ execute 'unzip the kafka binary to /opt' do
 end
 
 # create kafka-manager directories
-[kafka_manager_parent_dir, kafka_manager_log_dir].each do |dir|
+[kafka_manager_parent_dir, kafka_manager_logs_dir].each do |dir|
   directory dir do
     owner 'kafka'
     group 'kafka'
