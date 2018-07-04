@@ -13,8 +13,8 @@ default['kafka']['zookeeper']['snapRetainCount'] = 3
 default['kafka']['zookeeper']['purgeInterval'] = 168
 
 ### kafka attributes
-default['kafka']['kafka']['source_location'] = 'https://www.apache.org/dyn/closer.cgi?path=/kafka/1.1.0/kafka_2.12-1.1.0.tgz'
-default['kafka']['kafka']['download_destination'] = '/tmp/kafka_2.12-1.1.0.gz'
+default['kafka']['kafka']['source_location'] = 'http://apache.mirror.anlx.net/kafka/1.1.0/kafka_2.12-1.1.0.tgz'
+default['kafka']['kafka']['download_destination'] = '/tmp/kafka_2.12-1.1.0.tgz'
 
 default['kafka']['kafka']['parent.dir'] = '/kafka'
 default['kafka']['kafka']['log.dirs'] = '/kafka/kafka-logs'
