@@ -78,6 +78,7 @@ execute 'download kafka-manager' do
   cwd "#{kafka_manager_download_location}"
   command "git clone #{kafka_manager_source_location}"
   action :run
+  not_if { ::Dir.exist?("/tmp/kafka-manager") }
 end
 
 # build kafka-manager from source
@@ -92,6 +93,7 @@ execute 'unzip the kafka binary to /opt' do
   cwd '/opt'
   command 'unzip /tmp/kafka-manager/target/universal/kafka-manager* && mv kafka-manager* /opt/kafka-manager'
   action :run
+  # add a NOT_IF guard
 end
 
 # create kafka-manager directories
