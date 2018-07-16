@@ -66,8 +66,10 @@ stop(){
 status(){
         if [ "$(is_running)" = "true" ]; then
                 echo "kafka-manager is running with $(get_pid)"
+                return 0
         else
                 echo "kafka-manager is not running."
+                return 3
         fi
 }
 
