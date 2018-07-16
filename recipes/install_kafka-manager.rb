@@ -92,7 +92,7 @@ end
 
 # build kafka-manager from source
 execute 'build kafka-manager from source' do
-  cwd '/tmp/kafka-manager'
+  cwd '/tmp'
   command 'bash build_kafka-manager.sh'
   action :run
 end
