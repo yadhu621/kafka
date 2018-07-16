@@ -73,7 +73,7 @@ execute 'install sbt' do
   action :run
 end
 
-# download kafka-manager source
+# download kafka-manager source and chown it to kafka
 execute 'download kafka-manager' do
   cwd "#{kafka_manager_download_location}"
   command "git clone #{kafka_manager_source_location} && chown -R kafka:kafka /tmp/kafka-manager"
@@ -81,7 +81,7 @@ execute 'download kafka-manager' do
   not_if { ::Dir.exist?("/tmp/kafka-manager") }
 end
 
-# deliver sbt install script
+# deliver build_kafka-manager install script
 cookbook_file '/tmp/build_kafka-manager.sh' do
   source 'build_kafka-manager.sh'
   owner 'root'
@@ -102,7 +102,7 @@ execute 'unzip the kafka binary to /opt' do
   cwd '/opt'
   command 'unzip /tmp/kafka-manager/target/universal/kafka-manager* && mv kafka-manager* /opt/kafka-manager'
   action :run
-  # add a NOT_IF guard
+  not_if { ::Dir.exist?("/tmp/kafka-manager") }
 end
 
 # create kafka-manager directories
