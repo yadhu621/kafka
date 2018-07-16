@@ -76,7 +76,7 @@ end
 # download kafka-manager source and chown it to kafka
 execute 'download kafka-manager' do
   cwd "#{kafka_manager_download_location}"
-  command "git clone #{kafka_manager_source_location} && chown -R kafka:kafka /tmp/kafka-manager"
+  command "git clone #{kafka_manager_source_location}"
   action :run
   not_if { ::Dir.exist?("/tmp/kafka-manager") }
 end
@@ -97,10 +97,14 @@ execute 'build kafka-manager from source' do
   action :run
 end
 
-# unzip the binary to /opt and rename to kafka-manager
-execute 'unzip the kafka binary to /opt' do
+# unzip the binary to /opt and rename to kafka-manager, and chown it to kafka
+bash '1. unzip the kafka binary to /opt 2.rename 3. chown to kafka' do
   cwd '/opt'
-  command 'unzip /tmp/kafka-manager/target/universal/kafka-manager* && mv kafka-manager* /opt/kafka-manager'
+  code <<-EOH
+    unzip /tmp/kafka-manager/target/universal/kafka-manager*
+    mv kafka-manager* /opt/kafka-manager
+    chown -R kafka:kafka /opt/kafka-manager
+  EOH
   action :run
   not_if { ::Dir.exist?("/opt/kafka-manager") }
 end
