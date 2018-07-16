@@ -76,15 +76,24 @@ end
 # download kafka-manager source
 execute 'download kafka-manager' do
   cwd "#{kafka_manager_download_location}"
-  command "git clone #{kafka_manager_source_location}"
+  command "git clone #{kafka_manager_source_location} && chown -R kafka:kafka /tmp/kafka-manager"
   action :run
   not_if { ::Dir.exist?("/tmp/kafka-manager") }
+end
+
+# deliver sbt install script
+cookbook_file '/tmp/build_kafka-manager.sh' do
+  source 'build_kafka-manager.sh'
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
 end
 
 # build kafka-manager from source
 execute 'build kafka-manager from source' do
   cwd '/tmp/kafka-manager'
-  command 'sbt clean dist'
+  command 'bash build_kafka-manager.sh'
   action :run
 end
 
