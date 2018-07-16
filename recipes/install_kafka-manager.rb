@@ -102,7 +102,7 @@ execute 'unzip the kafka binary to /opt' do
   cwd '/opt'
   command 'unzip /tmp/kafka-manager/target/universal/kafka-manager* && mv kafka-manager* /opt/kafka-manager'
   action :run
-  not_if { ::Dir.exist?("/tmp/kafka-manager") }
+  not_if { ::Dir.exist?("/opt/kafka-manager") }
 end
 
 # create kafka-manager directories
