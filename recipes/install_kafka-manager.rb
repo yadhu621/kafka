@@ -93,45 +93,46 @@ cookbook_file '/tmp/build_kafka-manager.sh' do
   action :create
 end
 
-# # build kafka-manager from source
-# execute 'build kafka-manager from source' do
-#   cwd '/tmp'
-#   command 'bash build_kafka-manager.sh'
-#   action :run
-# end
+# build kafka-manager from source
+execute 'build kafka-manager from source' do
+  cwd '/tmp'
+  command 'bash build_kafka-manager.sh'
+  action :run
+  not_if { ::Dir.exist?("/opt/kafka-manager") }
+end
 
-# # unzip the binary to /opt and rename to kafka-manager, and chown it to kafka
-# bash '1. unzip the kafka binary to /opt 2.rename 3. chown to kafka' do
-#   cwd '/opt'
-#   code <<-EOH
-#     unzip /tmp/kafka-manager/target/universal/kafka-manager*
-#     mv kafka-manager* /opt/kafka-manager
-#     chown -R kafka:kafka /opt/kafka-manager
-#   EOH
-#   action :run
-#   not_if { ::Dir.exist?("/opt/kafka-manager") }
-# end
+# unzip the binary to /opt and rename to kafka-manager, and chown it to kafka
+bash '1. unzip the kafka binary to /opt 2.rename 3. chown to kafka' do
+  cwd '/opt'
+  code <<-EOH
+    unzip /tmp/kafka-manager/target/universal/kafka-manager*
+    mv kafka-manager* /opt/kafka-manager
+    chown -R kafka:kafka /opt/kafka-manager
+  EOH
+  action :run
+  not_if { ::Dir.exist?("/opt/kafka-manager") }
+end
 
 # # create kafka-manager directories
-# [kafka_manager_parent_dir, kafka_manager_logs_dir].each do |dir|
-#   directory dir do
-#     owner 'kafka'
-#     group 'kafka'
-#     mode '0755'
-#     action :create
-#   end
-# end
+[kafka_manager_parent_dir, kafka_manager_logs_dir].each do |dir|
+  directory dir do
+    owner 'kafka'
+    group 'kafka'
+    mode '0755'
+    action :create
+  end
+end
 
-# # deliver sysvinit script
-# cookbook_file '/etc/rc.d/init.d/kafka-manager' do
-#   source 'sysvinit_kafka_manager'
-#   owner 'kafka'
-#   group 'kafka'
-#   mode '0755'
-#   action :create
-# end
+# deliver sysvinit script
+cookbook_file '/etc/rc.d/init.d/kafka-manager' do
+  source 'sysvinit_kafka_manager'
+  owner 'kafka'
+  group 'kafka'
+  mode '0755'
+  action :create
+end
 
-# # start kafka-manager service
-# service 'kafka-manager' do
-#   action [:start, :enable]
-# end
+# start kafka-manager service
+service 'kafka-manager' do
+  action [:start, :enable]
+end
