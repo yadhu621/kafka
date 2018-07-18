@@ -26,14 +26,6 @@ sbt_download_location = node['kafka']['kafka-manager']['sbt_download_location'] 
 
 
 # download scala rpm
-# execute 'download scala rpm' do
-#   cwd "#{scala_download_location}"
-#   command "wget #{scala_source_location}"
-#   action :run
-#   not_if { ::File.exist?("/tmp/scala-2.12.2.rpm") }
-# end
-
-# download scala rpm
 remote_file scala_download_location do
   source scala_source_location
   owner 'kafka'
@@ -57,14 +49,6 @@ execute 'install scala' do
   command 'bash install_scala.sh'
   action :run
 end
-
-# download sbt rpm
-# execute 'download sbt rpm' do
-#   cwd "#{sbt_download_location}"
-#   command "wget #{sbt_source_location}"
-#   action :run
-#   not_if { ::File.exist?("/tmp/sbt-1.1.6.rpm") }
-# end
 
 # download sbt rpm
 remote_file sbt_download_location do
@@ -99,12 +83,11 @@ execute 'download kafka-manager' do
   not_if { ::Dir.exist?("/tmp/kafka-manager") }
 end
 
-# git "/path/to/check/out/to" do
-#   repository "git://github.com/opscode/chef.git"
-#   reference "master"
-#   action :sync
-# end
-
+git "/tmp/kafka-manager2" do
+  repository "git://github.com/yahoo/kafka-manager.git"
+  reference "master"
+  action :sync
+end
 
 # deliver build_kafka-manager install script
 cookbook_file '/tmp/build_kafka-manager.sh' do

@@ -23,9 +23,6 @@ my_hash = {
   kafka_log_segment_bytes: kafka_log_segment_bytes,
 }
 
-# cleanup previous installation
-include_recipe 'kafka::remove_kafka'
-
 # create a user for kafka
 user 'kafka' do
   comment 'system account for kafka'
