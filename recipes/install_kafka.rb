@@ -48,12 +48,14 @@ execute 'untar and unzip the kafka source' do
   group 'kafka'
   umask 022
   action :run
+  not_if { ::Dir.exist?('/tmp/kafka-2.12-1.1.0') }
 end
 
 # copy source to /opt/ and rename from kafka-x.y.zz to kafka
 execute 'move kafka source to /opt' do
   command 'cp -rp /tmp/kafka_2.12-1.1.0 /opt/ && mv /opt/kafka_2.12-1.1.0 /opt/kafka'
   action :run
+  not_if { ::Dir.exist?('/opt/kafka') }
 end
 
 # create kafka-logs folder
