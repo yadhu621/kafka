@@ -6,7 +6,7 @@ include_recipe 'kafka::install_java'
 # install scala
 # install sbt
 # download kafka-manager source to /tmp from github
-# build. cd to /tmp/kafka-manager and sbt clean dist
+# build: cd to /tmp/kafka-manager and sbt clean dist
 # unzip /tmp/kafka-manager/target/univeral/kafka-manager-1.3.3.17.zip
 # mv kafka-manager-1.3.3.17 to /opt 
 # rename /opt/kafka-manager-1.3.3.17 to /opt/kafka-manager
@@ -19,18 +19,27 @@ kafka_manager_parent_dir = node['kafka']['kafka-manager']['parent_dir'] # '/kafk
 kafka_manager_logs_dir = node['kafka']['kafka-manager']['logs_dir'] #'/kafka/kafka-manager/logs'
 
 scala_source_location = node['kafka']['kafka-manager']['scala_source_location'] # https://downloads.lightbend.com/scala/2.12.2/scala-2.12.2.rpm
-scala_download_location = node['kafka']['kafka-manager']['scala_download_location'] # /tmp
+scala_download_location = node['kafka']['kafka-manager']['scala_download_location'] # /tmp/scala-2.12.2.rpm
 
 sbt_source_location = node['kafka']['kafka-manager']['sbt_source_location'] # https://sbt.bintray.com/rpm/sbt-1.1.6.rpm
-sbt_download_location = node['kafka']['kafka-manager']['sbt_download_location'] # /tmp
+sbt_download_location = node['kafka']['kafka-manager']['sbt_download_location'] # /tmp/sbt-1.1.6.rpm
 
 
 # download scala rpm
-execute 'download scala rpm' do
-  cwd "#{scala_download_location}"
-  command "wget #{scala_source_location}"
-  action :run
-  not_if { ::File.exist?("/tmp/scala-2.12.2.rpm") }
+# execute 'download scala rpm' do
+#   cwd "#{scala_download_location}"
+#   command "wget #{scala_source_location}"
+#   action :run
+#   not_if { ::File.exist?("/tmp/scala-2.12.2.rpm") }
+# end
+
+# download scala rpm
+remote_file scala_download_location do
+  source scala_source_location
+  owner 'kafka'
+  group 'kafka'
+  mode '0644'
+  action :create
 end
 
 # deliver scala install script
@@ -50,11 +59,20 @@ execute 'install scala' do
 end
 
 # download sbt rpm
-execute 'download sbt rpm' do
-  cwd "#{sbt_download_location}"
-  command "wget #{sbt_source_location}"
-  action :run
-  not_if { ::File.exist?("/tmp/sbt-1.1.6.rpm") }
+# execute 'download sbt rpm' do
+#   cwd "#{sbt_download_location}"
+#   command "wget #{sbt_source_location}"
+#   action :run
+#   not_if { ::File.exist?("/tmp/sbt-1.1.6.rpm") }
+# end
+
+# download sbt rpm
+remote_file sbt_download_location do
+  source sbt_source_location
+  owner 'kafka'
+  group 'kafka'
+  mode '0644'
+  action :create
 end
 
 # deliver sbt install script
@@ -80,6 +98,13 @@ execute 'download kafka-manager' do
   action :run
   not_if { ::Dir.exist?("/tmp/kafka-manager") }
 end
+
+# git "/path/to/check/out/to" do
+#   repository "git://github.com/opscode/chef.git"
+#   reference "master"
+#   action :sync
+# end
+
 
 # deliver build_kafka-manager install script
 cookbook_file '/tmp/build_kafka-manager.sh' do
@@ -132,4 +157,3 @@ end
 service 'kafka-manager' do
   action [:start, :enable]
 end
-

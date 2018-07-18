@@ -13,6 +13,7 @@ service 'zookeeper' do
   action :stop
 end
 
+# remove zookeeper directories
 [
   zookeeper_parent_dir,
   zookeeper_dataDir,
@@ -39,6 +40,7 @@ file '/etc/rc.d/init.d/zookeeper' do
   action :delete
 end
 
+# remove zookeeper user
 user 'zookeeper' do
   action :remove
 end

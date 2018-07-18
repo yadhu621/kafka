@@ -11,9 +11,9 @@ zookeeper_purgeInterval= node['kafka']['zookeeper']['purgeInterval'] ## 168
 
 # variable hash for zoo.cfg template
 my_hash = {
-  zookeeper_clientPort: zookeeper_clientPort,
   zookeeper_dataDir: zookeeper_dataDir,
   zookeeper_dataLogDir: zookeeper_dataLogDir,
+  zookeeper_clientPort: zookeeper_clientPort,
   zookeeper_snapRetainCount: zookeeper_snapRetainCount,
   zookeeper_purgeInterval: zookeeper_purgeInterval,
 }
