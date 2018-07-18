@@ -75,18 +75,13 @@ execute 'install sbt' do
   action :run
 end
 
-# download kafka-manager source and chown it to kafka
-execute 'download kafka-manager' do
-  cwd "#{kafka_manager_download_location}"
-  command "git clone #{kafka_manager_source_location}"
-  action :run
-  not_if { ::Dir.exist?("/tmp/kafka-manager") }
-end
-
-git "/tmp/kafka-manager2" do
+git "download kafka-manager source" do
   repository "git://github.com/yahoo/kafka-manager.git"
+  destination "/tmp/kafka-manager"
   reference "master"
   action :sync
+  user 'kafka'
+  group 'kafka'
 end
 
 # deliver build_kafka-manager install script
