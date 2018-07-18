@@ -44,7 +44,7 @@ execute 'unzip and untar zookeeper source' do
   umask 022
   action :run
   not_if do
-    { ::Dir.exists?('/tmp/zookeeper-3.4.12') }
+    ::Dir.exist?('/tmp/zookeeper-3.4.12')
   end
 end
 
@@ -52,7 +52,7 @@ end
 execute 'move to /opt and rename' do
   command 'cp -rp /tmp/zookeeper-3.4.12 /opt/ && mv /opt/zookeeper-3.4.12 /opt/zookeeper'
   action :run
-  not_if { ::Dir.exists('/opt/zookeeper') }
+  not_if { ::Dir.exist?('/opt/zookeeper') }
 end
 
 # create required directories and files
